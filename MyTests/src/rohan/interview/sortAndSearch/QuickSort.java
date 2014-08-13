@@ -20,45 +20,34 @@ public class QuickSort {
 	}
 
 	private static void quickSort(double[] input, int startIndex, int endIndex) {
-		System.out.println();
 	    if (startIndex >= endIndex) {
 	    	return;
 	    }
 	    
 	    int pivotIndex = getPivotIndex(input, startIndex, endIndex);
-	    double pivotValue = input[pivotIndex];
-	    
-	    swap(input, pivotIndex, endIndex);
-	    
-	    // Arrange all the numbers such that numbers smaller than the pivot
-	    // are to the left of the numbers larger than the pivot
-	    int i = startIndex;
-	    int j = endIndex;
-	    
-	    while (i < j) {
-	        for (; i <= j; i++) {
-	            if (input[i] > pivotValue) {
-	                break;
-	            }
-	        }
 
-	        for (; j > i; j--) {
-	            if (input[j] < pivotValue) {
-	                break;
-	            }
-	        }
-
-	        if (i < j) {
-		        swap(input, i, j);	        	
-	        }
-	    }
-	    
-	    // Put the pivot in the right place
-	    swap(input, j, endIndex);
+	    int pivotPosition = partition(input, startIndex, endIndex, pivotIndex);
 	    
 	    // Sort recursively the left of the pivot and the right of the pivot
-	    quickSort(input, startIndex, j - 1);
-	    quickSort(input, j + 1, endIndex);
+	    quickSort(input, startIndex, pivotPosition - 1);
+	    quickSort(input, pivotPosition + 1, endIndex);
+	}
+
+	private static int partition(double[] input, int startIndex, int endIndex, int pivotIndex) {
+		double pivotValue = input[pivotIndex];
+		swap(input, pivotIndex, endIndex);
+		
+		int i = startIndex - 1;
+		
+		for (int j = startIndex; j <= endIndex - 1; j++) {
+			if (input[j] <= pivotValue) {
+				i++;
+				swap(input, i, j);
+			}
+		}
+		
+		swap(input, i + 1, endIndex);
+		return i + 1;
 	}
 
 	// Decides on a pivot element, and puts it at the endIndex of the input array.
@@ -71,11 +60,5 @@ public class QuickSort {
 		double temp = input[index1];
 		input[index1] = input[index2];
 		input[index2] = temp;
-		
-		System.out.println();
-		for (int i = 0; i < input.length; i++) {
-			System.out.print(input[i]);
-			System.out.print(", ");
-		}
 	}
 }
