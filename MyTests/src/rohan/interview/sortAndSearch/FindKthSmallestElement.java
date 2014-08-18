@@ -54,7 +54,7 @@ public class FindKthSmallestElement {
 	        return input[pivotPosition];
 	    }
 	    
-	    if (pivotPosition > k) {	    	
+	    if (pivotPosition > k) {    	
 	        return findKthSmallestElement(input, k, startIndex, pivotPosition - 1);
 	    }
 	    
