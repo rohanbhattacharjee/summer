@@ -3,7 +3,7 @@ package rohan.interview.graph;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CloneGraph {
+public class CloneGraphNoCycles {
 	public static void main(String[] args) {
 		Node startNode = makeGraph();
 		printGraph(startNode, 0);
