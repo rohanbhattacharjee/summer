@@ -16,50 +16,44 @@ public class SplitIntoWords {
         HashSet<String> dictionary = initializeDictionary();
         
         String sentence = "bedbathandbeyond";
-        List<String> words = splitIntoWords(sentence.toLowerCase(), dictionary);
+        List<List<String>> allWords = splitIntoWords(sentence.toLowerCase(), dictionary);
         
         System.out.println(sentence);
-        for (String word : words) {
-            System.out.print(word);
-            System.out.print(" ");
+        for (List<String> words : allWords) {
+        	for (String word : words) {
+                System.out.print(word);
+                System.out.print(" ");
+        	}
+        	
+        	System.out.println();
         }
         
         System.out.println();
         System.out.println("---------");
         
-        HashSet<String> dictionary2 = initializeDictionary2();
-        
-        String sentence2 = "bedbathandbeyond";
-        List<String> words2 = splitIntoWords(sentence2.toLowerCase(), dictionary2);
-        
+        String sentence2 = "bedbathandbeyonds";
+        List<List<String>> allWords2 = splitIntoWords(sentence2.toLowerCase(), dictionary);
+
         System.out.println(sentence2);
-        for (String word : words2) {
-            System.out.print(word);
-            System.out.print(" ");
+        for (List<String> words : allWords2) {
+        	for (String word : words) {
+                System.out.print(word);
+                System.out.print(" ");
+        	}
+        	
+        	System.out.println();
         }
 
-        System.out.println();
-        System.out.println("---------");
-
-        String sentence3 = "bedbathandbeyonds";
-        List<String> words3 = splitIntoWords(sentence3.toLowerCase(), dictionary2);
-        
-        System.out.println(sentence3);
-        for (String word : words3) {
-            System.out.print(word);
-            System.out.print(" ");
-        }
-        
         System.out.println();
         System.out.println("---------");
     }
     
-    public static List<String> splitIntoWords(String sentence, HashSet<String> dictionary) {
+    public static List<List<String>> splitIntoWords(String sentence, HashSet<String> dictionary) {
         if (sentence == null || sentence.isEmpty()) {
-            return new ArrayList<String>();
+            return new ArrayList<List<String>>();
         }
         
-        List<String> words = new ArrayList<String>();
+        List<List<String>> words = new ArrayList<List<String>>();
         
         for (int i = 1; i <= sentence.length(); i++) {
             String candidateWord = sentence.substring(0, i);
@@ -68,22 +62,23 @@ public class SplitIntoWords {
                 continue;
             }
             
-            words.add(candidateWord);
-            
             String remainingSentence = sentence.substring(i);
             
             if (remainingSentence == null || remainingSentence.isEmpty()) {
+                List<String> currentWord = new ArrayList<String>();
+                currentWord.add(candidateWord);
+                words.add(currentWord);
+
                 break;
             }
                         
-            List<String> followingWords = splitIntoWords(remainingSentence, dictionary);
+            List<List<String>> followingWords = splitIntoWords(remainingSentence, dictionary);
             
-            if (followingWords == null || followingWords.size() == 0) {
-                words.remove(candidateWord);
-            }
-            else {
-                words.addAll(followingWords);
-                break;
+            if (followingWords != null && followingWords.size() > 0) {
+            	for (List<String> possibleWordSequences : followingWords) {
+            		possibleWordSequences.add(0, candidateWord);
+            		words.add(possibleWordSequences);
+            	}
             }
         }
         
@@ -96,16 +91,8 @@ public class SplitIntoWords {
         dictionary.add("bath");
         dictionary.add("bed");
         dictionary.add("beyond");
-
-        return dictionary;    
-    }
-    
-    private static HashSet<String> initializeDictionary2() {
-        HashSet<String> dictionary = new HashSet<String>();
         dictionary.add("hand");
         dictionary.add("bat");
-        dictionary.add("bed");
-        dictionary.add("beyond");
 
         return dictionary;    
     }
