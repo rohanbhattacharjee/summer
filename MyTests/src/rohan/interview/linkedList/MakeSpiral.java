@@ -5,10 +5,16 @@ import java.util.Stack;
 public class MakeSpiral {
 
 	public static void main(String[] args) {
-		Node head = makeLinkedList(5);
+		Node head = makeLinkedList(4);
 		printLinkedList(head);
 
 		Node newHead = makeSpiral(head);
+		printLinkedList(newHead);
+
+		head = makeLinkedList(5);
+		printLinkedList(head);
+
+		newHead = makeSpiral(head);
 		printLinkedList(newHead);
 		
 		head = makeLinkedList(6);
@@ -58,7 +64,7 @@ public class MakeSpiral {
 	}
 
 	private static Node makeSpiral(Node head) {
-	    if (head == null | head.next == null) {
+	    if (head == null || head.next == null) {
 	        return head;
 	    }
 
