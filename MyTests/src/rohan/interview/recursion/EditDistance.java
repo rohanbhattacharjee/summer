@@ -27,6 +27,9 @@ public class EditDistance {
 		System.out.println(String.format("%s : %s : %d", word1, word2, minDistance(word1, word2)));
 	}
 
+    /**
+     * computes the cost to transform word1 into word2
+     */
     public static int minDistance(String word1, String word2) {
         if (word1 == null) {
             word1 = "";
@@ -48,13 +51,13 @@ public class EditDistance {
         }
         
         if (index1 < 0) {
-            cache.put(key, index2 + 1);
-            return index2 + 1;
+            cache.put(key, index2 + insertCost);
+            return index2 + insertCost;
         }
         
         if (index2 < 0) {
-            cache.put(key, index1 + 1);
-            return index1 + 1;
+            cache.put(key, index1 + deleteCost);
+            return index1 + deleteCost;
         }
         
         char word1Char = word1[index1];
