@@ -25,6 +25,10 @@ public class EditDistance {
 		word1 = "theirs";
 		word2 = "there";
 		System.out.println(String.format("%s : %s : %d", word1, word2, minDistance(word1, word2)));
+
+		word1 = "one";
+		word2 = "";
+		System.out.println(String.format("%s : %s : %d", word1, word2, minDistance(word1, word2)));
 	}
 
     /**
@@ -51,13 +55,13 @@ public class EditDistance {
         }
         
         if (index1 < 0) {
-            cache.put(key, index2 + insertCost);
-            return index2 + insertCost;
+            cache.put(key, (index2 + 1) * insertCost);
+            return cache.get(key);
         }
         
         if (index2 < 0) {
-            cache.put(key, index1 + deleteCost);
-            return index1 + deleteCost;
+            cache.put(key, (index1 + 1) * deleteCost);
+            return cache.get(key);
         }
         
         char word1Char = word1[index1];
